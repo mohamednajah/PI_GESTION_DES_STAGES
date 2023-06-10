@@ -1,0 +1,16 @@
+
+  .char{
+    margin-top: 25px;
+    margin-left: -100px;
+  
+  }
+
+  .center{
+    margin-left: -80px;
+    margin-top: 5px;
+    display: flex;
+    justify-content:center;
+    font-weight: 700;
+    text-decoration:solid;
+    color: rgb(48, 48, 48);
+  }

@@ -1,0 +1,14 @@
+.drawer-container {
+    height: 100vh;
+  }
+  
+  mat-drawer {
+    width: 260px;
+
+    height: 100%;
+  }
+  
+  mat-drawer-content {
+    height: 100%;
+  }
+  
