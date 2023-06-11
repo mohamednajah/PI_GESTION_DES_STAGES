@@ -3,30 +3,30 @@
     display: flex;
     align-items: center;
   }
-  
+
   .search-form {
     display: flex;
     align-items: center;
     background-color: transparent;
     width: 900px;
   }
-  
+
   .form-field {
     width: 100%;
   }
-  
+
   .right-section {
     flex: 1;
     display: flex;
     align-items:end ;
     justify-content: end;
   }
-  
+
   .user-info {
     display: flex;
     align-items: center;
   }
-  
+
   .user-picture {
     width: 42px;
     height: 42px;
@@ -48,4 +48,7 @@
   }
   .form-field {
     margin-right: 16px; /* Adjust the margin value as needed */
+  }
+  .wid{
+    padding: 15px;
   }

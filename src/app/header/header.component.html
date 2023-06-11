@@ -1,35 +1,36 @@
 <mat-toolbar>
     <div class="left-section">
       <form class="search-form">
-        <mat-form-field appearance="fill" class="form-field" fxFlex>
+        <mat-form-field *ngIf="showAnneeUniv" appearance="fill" class="form-field" fxFlex>
           <mat-select placeholder="Annee universitaire">
             <mat-option value="option1">Option 1</mat-option>
             <mat-option value="option2">Option 2</mat-option>
             <mat-option value="option3">Option 3</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="fill" class="form-field" fxFlex>
+        <mat-form-field *ngIf="showtypestage" appearance="fill" class="form-field" fxFlex>
           <mat-select placeholder="type de stage">
             <mat-option value="option1">Option 1</mat-option>
             <mat-option value="option2">Option 2</mat-option>
             <mat-option value="option3">Option 3</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="fill" class="form-field" fxFlex>
+        <mat-form-field *ngIf="showfiliere" appearance="fill" class="form-field" fxFlex>
           <mat-select placeholder="Filiere">
             <mat-option value="option1">Option 1</mat-option>
             <mat-option value="option2">Option 2</mat-option>
             <mat-option value="option3">Option 3</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="fill" class="form-field" fxFlex>
-          <input matInput placeholder="Search" type="text">
+        <mat-form-field *ngIf="showFormField" appearance="fill" class="form-field" fxFlex>
+          <input matInput placeholder="Rechercher..." type="text">
         </mat-form-field>
-        <button type="submit" mat-raised-button class="btn btn-info">Chercher</button>
+        <button class="wid" mat-raised-button type="submit"	 color="primary">{{buttonName}}</button>
+
 
       </form>
     </div>
-  
+
     <div class="right-section">
       <div class="user-info" fxLayout="row" fxLayoutAlign="end center">
         <img src="https://i.ibb.co/VNjn9XK/d73313b8-f0e1-47bc-99c0-be3d77ab8b09.jpg" alt="User Picture" class="user-picture">
@@ -40,4 +41,3 @@
       </div>
     </div>
   </mat-toolbar>
-  

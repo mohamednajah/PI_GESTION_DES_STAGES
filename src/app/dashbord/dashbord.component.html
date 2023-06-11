@@ -1,17 +1,8 @@
+  <app-header [showFormField]="true" [buttonName]="'Find'"></app-header>
+  <app-cards></app-cards>
+  <app-charts></app-charts>
 
-<mat-drawer-container class="drawer-container">
-  <mat-drawer mode="side" opened="true">
-    <app-navbar></app-navbar>
-  </mat-drawer>
-  <mat-drawer-content>
-    <app-header></app-header>
-    <router-outlet>
-      <app-cards></app-cards>
-      <app-charts></app-charts>
-    </router-outlet>
-  </mat-drawer-content>
 
-</mat-drawer-container>
 
 
 

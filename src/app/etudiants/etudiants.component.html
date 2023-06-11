@@ -1,0 +1,59 @@
+<app-header  [showfiliere]="false" [showtypestage]="false" [showAnneeUniv]="false"  [buttonName]="'Chercher'"></app-header>
+<div class="options">
+  <button mat-button color="primary" >Import Users</button>
+
+  <input type="file" (change)="readexcel($event)">
+
+  <button mat-button color="primary" (click)="exportToCSV()">Export Users</button>
+</div>
+<button (click)="showForm = !showForm"  class="ms-2 " mat-raised-button	 color="primary">Ajouter un Etudiant</button>
+<form class="mt-3" *ngIf="showForm">
+  <div class="form-grid ms-3 me-4">
+    <div class="form-column">
+      <mat-form-field>
+        <input matInput placeholder="Code apogée" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="CNE" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="CNI" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="NOM" />
+      </mat-form-field>
+
+      <!-- Ajoutez les autres champs ici pour la première colonne -->
+      <mat-form-field>
+        <input matInput placeholder="PRENOM" />
+      </mat-form-field>
+
+      <!-- ... -->
+
+    </div>
+
+    <div class="form-column">
+      <mat-form-field>
+        <input type="date" matInput placeholder="Date de Naissance" />
+      </mat-form-field>
+
+      <!-- Ajoutez les autres champs ici pour la deuxième colonne -->
+      <mat-form-field>
+        <input matInput placeholder="Ville" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Adresse" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="telephone" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Email" />
+      </mat-form-field>
+      <!-- ... -->
+
+    </div>
+  </div>
+
+  <button class="ms-3" mat-raised-button color="primary">Valider</button>
+</form>

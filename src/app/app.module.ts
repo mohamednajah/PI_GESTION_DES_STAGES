@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+// @ts-ignore
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import { DashbordComponent } from './dashbord/dashbord.component';
+import {EtudiantsComponent} from "./etudiants/etudiants.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -22,6 +24,10 @@ import { MatCardModule } from '@angular/material/card';
 import { ChartsComponent } from './charts/charts.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { RapportsComponent } from './rapports/rapports.component';
+import { MatButtonModule } from '@angular/material/button';
+import * as XLSX from 'xlsx'
+
+// @ts-ignore
 
 
 
@@ -30,6 +36,9 @@ import { RapportsComponent } from './rapports/rapports.component';
 
 
 
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +47,8 @@ import { RapportsComponent } from './rapports/rapports.component';
     HeaderComponent,
     CardsComponent,
     ChartsComponent,
-    RapportsComponent
+    RapportsComponent,
+    EtudiantsComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +64,7 @@ import { RapportsComponent } from './rapports/rapports.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatButtonModule,
     MatCardModule,
     NgxEchartsModule.forRoot({
       /**
@@ -63,8 +74,8 @@ import { RapportsComponent } from './rapports/rapports.component';
        */
       echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
     }),
-  
-    
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

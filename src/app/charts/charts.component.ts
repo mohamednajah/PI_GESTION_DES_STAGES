@@ -59,11 +59,11 @@ export class ChartsComponent implements OnInit {
           }
         },
         data: [
-          { value: 40, name: 'Entreprise 1' },
-          { value: 33, name: 'Entreprise 2' },
-          { value: 28, name: 'Entreprise 3' },
-          { value: 22, name: 'Entreprise 4' },
-          { value: 20, name: 'Entreprise 5' },
+          { value: 40, name: 'Adria ' },
+          { value: 33, name: 'Inwi' },
+          { value: 28, name: 'Capgemini' },
+          { value: 22, name: 'SAP' },
+          { value: 20, name: 'Nimbleways' },
           { value: 15, name: 'Entreprise 6' },
           { value: 12, name: 'Entreprise 7' },
           { value: 10, name: 'Entreprise 8' }
@@ -79,11 +79,11 @@ export class ChartsComponent implements OnInit {
           borderRadius: 5
         },
         data: [
-          { value: 30, name: 'Entreprise 1' },
-          { value: 28, name: 'Entreprise 2' },
-          { value: 26, name: 'Entreprise 3' },
-          { value: 24, name: 'Entreprise 4' },
-          { value: 22, name: 'Entreprise 5' },
+          { value: 30, name: 'Adria' },
+          { value: 28, name: 'Inwi' },
+          { value: 26, name: 'Capgemini' },
+          { value: 24, name: 'SAP' },
+          { value: 22, name: 'Nimbleways' },
           { value: 20, name: 'Entreprise 6' },
           { value: 18, name: 'Entreprise 7' },
           { value: 16, name: 'Entreprise 8' }
@@ -110,11 +110,12 @@ export class ChartsComponent implements OnInit {
       }
     ]
   };
-  
-  
+
+
+
   ngOnInit(): void {
-    
+
   }
-  
+
 
 }

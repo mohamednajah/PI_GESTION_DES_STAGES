@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {NgIf} from '@angular/common';
+import { DashbordService } from '../services/dashbord.service';
 
 
 @Component({
@@ -7,7 +8,13 @@ import {NgIf} from '@angular/common';
   templateUrl: './dashbord.component.html',
   styleUrls: ['./dashbord.component.css'],
 })
-export class DashbordComponent {
 
+export class DashbordComponent implements OnInit {
+ 
+constructor() {
+}
+ ngOnInit(): void {
+  
+}
 
 }
