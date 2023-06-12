@@ -1,17 +1,22 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+
 import {EtudiantsService} from "../services/etudiants.service";
 import * as XLSX from 'xlsx'
-
+import {etudiants} from "../models/etudiant";
+import {Router} from "@angular/router";
 @Component({
   selector: 'app-etudiants',
   templateUrl: './etudiants.component.html',
-  styleUrls: ['./etudiants.component.css']
+  styleUrls: ['./etudiants.component.css'],
 })
 export class EtudiantsComponent implements OnInit {
 
+  newEtudiantFormGroup! : FormGroup;
+
   ExcelData:any;
-  constructor(private http: HttpClient,private etudiantsSerive:EtudiantsService
+  constructor(private http: HttpClient,private etudiantsSerive:EtudiantsService, private fb: FormBuilder, private router:Router
   ) {}
 
   showForm = false;
@@ -54,11 +59,34 @@ readexcel(event:any){
       console.log(this.ExcelData);
 
   }
-
-
-
 }
 
   ngOnInit(): void {
+    this.newEtudiantFormGroup=this.fb.group({
+      codeApogee : this.fb.control(null, [Validators.required]),
+      cne : this.fb.control(null, [Validators.required]),
+      cni : this.fb.control(null, [Validators.required]),
+      nom : this.fb.control(null, [Validators.required]),
+      prenom : this.fb.control(null, [Validators.required]),
+      dateNaissance : this.fb.control(null, [Validators.required]),
+      ville : this.fb.control(null, [Validators.required]),
+      adresse : this.fb.control(null, [Validators.required]),
+      telephone : this.fb.control(null, [Validators.required]),
+      email : this.fb.control(null,[Validators.required, Validators.email])
+    });
+  }
+
+  handleSaveStudent() {
+    let student:etudiants=this.newEtudiantFormGroup.value;
+    this.etudiantsSerive.addEtudiant(student).subscribe({
+      next : data=>{
+        alert("Etudiant enregistré avec succée!");
+        this.newEtudiantFormGroup.reset();
+        this.router.navigateByUrl("/etudiants");
+      },
+      error : err => {
+        console.log(err);
+      }
+    });
   }
 }

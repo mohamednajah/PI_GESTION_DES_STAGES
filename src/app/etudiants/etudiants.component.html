@@ -7,25 +7,55 @@
   <button mat-button color="primary" (click)="exportToCSV()">Exporter Etudiants</button>
 </div>
 <button (click)="showForm = !showForm"  class="ms-2 " mat-raised-button	 color="primary">Ajouter un Etudiant</button>
-<form class="mt-3" *ngIf="showForm">
+<form [formGroup]="newEtudiantFormGroup" (ngSubmit)="handleSaveStudent()" class="mt-3" *ngIf="showForm">
   <div class="form-grid ms-3 me-4">
     <div class="form-column">
       <mat-form-field>
-        <input  matInput placeholder="Code apogée" />
+        <input type="text" formControlName="codeApogee" matInput placeholder="Code apogée" />
+        <span class="text-danger"
+              *ngIf="newEtudiantFormGroup.controls['codeApogee'].touched
+                && newEtudiantFormGroup.controls['codeApogee'].errors
+                && newEtudiantFormGroup.controls['codeApogee'].errors!['required']">
+            Champ requis
+          </span>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="CNE" />
+        <input type="text" formControlName="cne" matInput placeholder="CNE" />
+        <span class="text-danger"
+              *ngIf="newEtudiantFormGroup.controls['cne'].touched
+                && newEtudiantFormGroup.controls['cne'].errors
+                && newEtudiantFormGroup.controls['cne'].errors!['required']">
+            Champ requis
+          </span>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="CNI" />
+        <input type="text" formControlName="cni" matInput placeholder="CNI" />
+        <span class="text-danger"
+              *ngIf="newEtudiantFormGroup.controls['cni'].touched
+                && newEtudiantFormGroup.controls['cni'].errors
+                && newEtudiantFormGroup.controls['cni'].errors!['required']">
+            Champ requis
+          </span>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="NOM" />
+        <input type="text" formControlName="nom" matInput placeholder="NOM" />
+        <span class="text-danger"
+              *ngIf="newEtudiantFormGroup.controls['nom'].touched
+                && newEtudiantFormGroup.controls['nom'].errors
+                && newEtudiantFormGroup.controls['nom'].errors!['required']">
+            Champ requis
+          </span>
       </mat-form-field>
 
       <!-- Ajoutez les autres champs ici pour la première colonne -->
       <mat-form-field>
-        <input matInput placeholder="PRENOM" />
+        <input type="text" formControlName="prenom" matInput placeholder="PRENOM" />
+        <span class="text-danger"
+              *ngIf="newEtudiantFormGroup.controls['prenom'].touched
+                && newEtudiantFormGroup.controls['prenom'].errors
+                && newEtudiantFormGroup.controls['prenom'].errors!['required']">
+            Champ requis
+          </span>
       </mat-form-field>
 
       <!-- ... -->
@@ -34,26 +64,56 @@
 
     <div class="form-column">
       <mat-form-field>
-        <input type="date" matInput placeholder="Date de Naissance" />
+        <input type="date" formControlName="dateNaissance" matInput placeholder="Date de Naissance" />
+        <span class="text-danger"
+              *ngIf="newEtudiantFormGroup.controls['dateNaissance'].touched
+                && newEtudiantFormGroup.controls['dateNaissance'].errors
+                && newEtudiantFormGroup.controls['dateNaissance'].errors!['required']">
+            Champ requis
+          </span>
       </mat-form-field>
 
       <!-- Ajoutez les autres champs ici pour la deuxième colonne -->
       <mat-form-field>
-        <input matInput placeholder="Ville" />
+        <input type="text" formControlName="ville" matInput placeholder="Ville" />
+        <span class="text-danger"
+              *ngIf="newEtudiantFormGroup.controls['ville'].touched
+                && newEtudiantFormGroup.controls['ville'].errors
+                && newEtudiantFormGroup.controls['ville'].errors!['required']">
+            Champ requis
+          </span>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Adresse" />
+        <input type="text" formControlName="adresse" matInput placeholder="Adresse" />
+        <span class="text-danger"
+              *ngIf="newEtudiantFormGroup.controls['adresse'].touched
+                && newEtudiantFormGroup.controls['adresse'].errors
+                && newEtudiantFormGroup.controls['adresse'].errors!['required']">
+            Champ requis
+          </span>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="telephone" />
+        <input type="text" formControlName="telephone" matInput placeholder="telephone" />
+        <span class="text-danger"
+              *ngIf="newEtudiantFormGroup.controls['telephone'].touched
+                && newEtudiantFormGroup.controls['telephone'].errors
+                && newEtudiantFormGroup.controls['telephone'].errors!['required']">
+            Champ requis
+          </span>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Email" />
+        <input type="text" formControlName="email" matInput placeholder="Email" />
+        <span class="text-danger"
+              *ngIf="newEtudiantFormGroup.controls['email'].touched
+                && newEtudiantFormGroup.controls['email'].errors
+                && newEtudiantFormGroup.controls['email'].errors!['email']">
+            Email non valide
+          </span>
       </mat-form-field>
       <!-- ... -->
 
     </div>
   </div>
 
-  <button class="ms-3" mat-raised-button color="primary">Valider</button>
+  <button [disabled] = "!newEtudiantFormGroup.valid" class="ms-3" mat-raised-button color="primary">Valider</button>
 </form>
