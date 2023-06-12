@@ -19,13 +19,51 @@ export class EtudiantsComponent implements OnInit {
   showProgressBar: boolean = false;
   progressValue: number = 0;
   ExcelData:any;
+  etudiantList: etudiants[] = [];
 
   constructor(private http: HttpClient,private etudiantsService:EtudiantsService, private fb: FormBuilder, private router:Router
   ) {}
 
   showForm = false;
   importUsers() {
-    // Logic for importing users
+    this.ExcelData.forEach((row: any) => {
+      const etudiant: etudiants = {
+        codeApogee: row.codeApogee,
+        cne: row.cne,
+        cni: row.cni,
+        nom: row.nom,
+        prenom: row.prenom,
+        dateNaissance: row.dateNaissance,
+        ville: row.ville,
+        adresse: row.adresse,
+        telephone: row.telephone,
+        email: row.email
+
+      };
+      this.etudiantList.push(etudiant);
+    });
+
+    this.etudiantList.forEach((etudiant: etudiants, index: number) => {
+      console.log(etudiant)
+      this.etudiantsService.addEtudiant(etudiant).subscribe(
+        () => {
+          console.log('Import successful!');
+          this.progressValue = Math.round(((index + 1) / this.etudiantList.length) * 100);
+          if (index === this.etudiantList.length - 1) {
+            this.showProgressBar = false;
+            this.showSuccessMessage = true;
+            this.successMessage = 'Importation avec succée!';
+            setTimeout(() => {
+              this.showSuccessMessage = false;
+            }, 3000);
+          }
+        },
+        (error: any) => {
+          // Error handling
+          console.error('Error occurred while importing:', error);
+        }
+      );
+    });
   }
 
   exportToCSV() {
@@ -52,7 +90,7 @@ export class EtudiantsComponent implements OnInit {
 
 
 readexcel(event:any){
-  const etudiantList: etudiants[] = [];
+
    let file=event.target.files[0];
    let fileReader=new FileReader();
    fileReader.readAsBinaryString(file);
@@ -63,44 +101,7 @@ readexcel(event:any){
     this.showProgressBar = true;
     this.progressValue = 0;
     console.log(this.ExcelData);
-    this.ExcelData.forEach((row: any) => {
-      const etudiant: etudiants = {
-        codeApogee: row.codeApogee,
-        cne: row.cne,
-        cni: row.cni,
-        nom: row.nom,
-        prenom: row.prenom,
-        dateNaissance: row.dateNaissance,
-        ville: row.ville,
-        adresse: row.adresse,
-        telephone: row.telephone,
-        email: row.email
 
-      };
-      etudiantList.push(etudiant);
-    });
-
-    etudiantList.forEach((etudiant: etudiants, index: number) => {
-      console.log(etudiant)
-      this.etudiantsService.addEtudiant(etudiant).subscribe(
-        () => {
-          console.log('Import successful!');
-          this.progressValue = Math.round(((index + 1) / etudiantList.length) * 100);
-          if (index === etudiantList.length - 1) {
-            this.showProgressBar = false;
-            this.showSuccessMessage = true;
-            this.successMessage = 'Import successful!';
-            setTimeout(() => {
-              this.showSuccessMessage = false;
-            }, 5000);
-          }
-        },
-        (error: any) => {
-          // Error handling
-          console.error('Error occurred while importing:', error);
-        }
-      );
-    });
   }
 
 }
@@ -122,11 +123,20 @@ readexcel(event:any){
   }
 
   handleSaveStudent() {
+    this.showProgressBar = true;
+    this.progressValue = 0;
     let student:etudiants=this.newEtudiantFormGroup.value;
     this.etudiantsService.addEtudiant(student).subscribe({
       next : data=>{
-        alert("Etudiant enregistré avec succée!");
+        this.progressValue = Math.round(100);
+        this.showSuccessMessage = true;
+        this.successMessage = 'Etudiant enregistré avec succée!';
+        setTimeout(() => {
+          this.showSuccessMessage = false;
+          this.showProgressBar=false;
+        }, 3000);
         this.newEtudiantFormGroup.reset();
+        this.newEtudiantFormGroup.clearValidators();
         this.router.navigateByUrl("/etudiants");
       },
       error : err => {

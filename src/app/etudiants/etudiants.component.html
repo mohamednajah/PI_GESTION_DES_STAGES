@@ -6,7 +6,7 @@
   <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
 </div>
 <div class="options">
-  <button mat-button color="primary" >Import Users</button>
+  <button mat-button color="primary" (click)="importUsers()">Import Users</button>
   <label for="fileInput">(.xls, .xlsx):</label>
   <input id="fileInput" type="file"  accept=".xlsx, .xls" (change)="readexcel($event)">
 
