@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 // @ts-ignore
 import { AppRoutingModule } from './app-routing.module';
@@ -55,6 +56,7 @@ import * as XLSX from 'xlsx'
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MatProgressBarModule,
     BrowserAnimationsModule,
     MatGridListModule,
     MatSidenavModule,

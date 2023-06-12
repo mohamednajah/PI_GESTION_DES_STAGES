@@ -1,8 +1,14 @@
 <app-header  [showfiliere]="false" [showtypestage]="false" [showAnneeUniv]="false"  [buttonName]="'Chercher'"></app-header>
+<div class="success-message" *ngIf="showSuccessMessage">
+  {{ successMessage }}
+</div>
+<div class="progress-bar-container" *ngIf="showProgressBar">
+  <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
+</div>
 <div class="options">
   <button mat-button color="primary" >Import Users</button>
-
-  <input type="file" (change)="readexcel($event)">
+  <label for="fileInput">(.xls, .xlsx):</label>
+  <input id="fileInput" type="file"  accept=".xlsx, .xls" (change)="readexcel($event)">
 
   <button mat-button color="primary" (click)="exportToCSV()">Export Users</button>
 </div>

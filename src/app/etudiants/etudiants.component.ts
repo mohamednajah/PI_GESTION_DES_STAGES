@@ -14,9 +14,13 @@ import {Router} from "@angular/router";
 export class EtudiantsComponent implements OnInit {
 
   newEtudiantFormGroup! : FormGroup;
-
+  showSuccessMessage: boolean = false;
+  successMessage: string = '';
+  showProgressBar: boolean = false;
+  progressValue: number = 0;
   ExcelData:any;
-  constructor(private http: HttpClient,private etudiantsSerive:EtudiantsService, private fb: FormBuilder, private router:Router
+
+  constructor(private http: HttpClient,private etudiantsService:EtudiantsService, private fb: FormBuilder, private router:Router
   ) {}
 
   showForm = false;
@@ -25,7 +29,7 @@ export class EtudiantsComponent implements OnInit {
   }
 
   exportToCSV() {
-    this.etudiantsSerive.getEtudiants().subscribe((etudiants: any[]) => {
+    this.etudiantsService.getEtudiants().subscribe((etudiants: any[]) => {
       console.log(etudiants);
       const csvData = this.convertToCSV(etudiants);
       const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
@@ -47,19 +51,60 @@ export class EtudiantsComponent implements OnInit {
 
 
 
-
 readexcel(event:any){
+  const etudiantList: etudiants[] = [];
    let file=event.target.files[0];
    let fileReader=new FileReader();
    fileReader.readAsBinaryString(file);
-  fileReader.onload=(e)=>{
+  fileReader.onload=(e)=> {
     var workBook = XLSX.read(fileReader.result, {type: "binary"});
-      var sheetNames= workBook.SheetNames;
-      this.ExcelData= XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]])
-      console.log(this.ExcelData);
+    var sheetNames = workBook.SheetNames;
+    this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]])
+    this.showProgressBar = true;
+    this.progressValue = 0;
+    console.log(this.ExcelData);
+    this.ExcelData.forEach((row: any) => {
+      const etudiant: etudiants = {
+        codeApogee: row.codeApogee,
+        cne: row.cne,
+        cni: row.cni,
+        nom: row.nom,
+        prenom: row.prenom,
+        dateNaissance: row.dateNaissance,
+        ville: row.ville,
+        adresse: row.adresse,
+        telephone: row.telephone,
+        email: row.email
 
+      };
+      etudiantList.push(etudiant);
+    });
+
+    etudiantList.forEach((etudiant: etudiants, index: number) => {
+      console.log(etudiant)
+      this.etudiantsService.addEtudiant(etudiant).subscribe(
+        () => {
+          console.log('Import successful!');
+          this.progressValue = Math.round(((index + 1) / etudiantList.length) * 100);
+          if (index === etudiantList.length - 1) {
+            this.showProgressBar = false;
+            this.showSuccessMessage = true;
+            this.successMessage = 'Import successful!';
+            setTimeout(() => {
+              this.showSuccessMessage = false;
+            }, 5000);
+          }
+        },
+        (error: any) => {
+          // Error handling
+          console.error('Error occurred while importing:', error);
+        }
+      );
+    });
   }
+
 }
+
 
   ngOnInit(): void {
     this.newEtudiantFormGroup=this.fb.group({
@@ -78,7 +123,7 @@ readexcel(event:any){
 
   handleSaveStudent() {
     let student:etudiants=this.newEtudiantFormGroup.value;
-    this.etudiantsSerive.addEtudiant(student).subscribe({
+    this.etudiantsService.addEtudiant(student).subscribe({
       next : data=>{
         alert("Etudiant enregistré avec succée!");
         this.newEtudiantFormGroup.reset();
