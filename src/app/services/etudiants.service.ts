@@ -12,7 +12,7 @@ export class EtudiantsService {
   constructor(private http: HttpClient) { }
 
   getEtudiants(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(this.apiUrl+"/Etudiants");
   }
   // @ts-ignore
 public addEtudiant(etudiant:etudiants):Observable<etudiants>{

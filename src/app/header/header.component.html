@@ -25,7 +25,7 @@
         <mat-form-field *ngIf="showFormField" appearance="fill" class="form-field" fxFlex>
           <input matInput placeholder="Rechercher..." type="text">
         </mat-form-field>
-        <button class="wid" mat-raised-button type="submit"	 color="primary">{{buttonName}}</button>
+        <button class="wid" mat-raised-button type="submit"	 color="primary" (click)="onChercherClick($event)">{{buttonName}}</button>
 
 
       </form>
