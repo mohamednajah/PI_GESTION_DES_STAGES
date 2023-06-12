@@ -12,3 +12,28 @@
 button {
   margin-top: 20px;
 }
+
+.custom-input {
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 18px;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.custom-input.invalid {
+  border-color: #dc3545;
+}
+
+.custom-input.invalid:focus {
+  box-shadow: 0 0 5px rgba(220, 53, 69, 0.3);
+}
+
