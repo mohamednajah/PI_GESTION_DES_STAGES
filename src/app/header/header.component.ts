@@ -1,3 +1,4 @@
+
 import {Component, EventEmitter, Input, OnInit,Output} from '@angular/core';
 import {ActivatedRoute } from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms"
@@ -7,6 +8,11 @@ import {FormBuilder, FormGroup} from "@angular/forms"
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
+
+
+
+
+  
 export class HeaderComponent implements OnInit{
   @Output() searchClicked: EventEmitter<any> = new EventEmitter<any>();
   public searchFormGroup : FormGroup | undefined;

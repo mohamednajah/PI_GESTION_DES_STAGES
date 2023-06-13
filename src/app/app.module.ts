@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -7,9 +8,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
-import {ReactiveFormsModule} from "@angular/forms";
 import { DashbordComponent } from './dashbord/dashbord.component';
-import {EtudiantsComponent} from "./etudiants/etudiants.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -26,21 +25,27 @@ import { MatCardModule } from '@angular/material/card';
 import { ChartsComponent } from './charts/charts.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { RapportsComponent } from './rapports/rapports.component';
+import { EtudiantsComponent } from './etudiants/etudiants.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+
+// @ts-ignore
 import { MatButtonModule } from '@angular/material/button';
-import * as XLSX from 'xlsx'
-
-// @ts-ignore
-
-
-
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatTableModule} from '@angular/material/table';
+import { EntreprisesComponent } from './entreprises/entreprises.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 
 
-// @ts-ignore
-// @ts-ignore
-// @ts-ignore
+
+
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +56,8 @@ import * as XLSX from 'xlsx'
     ChartsComponent,
     RapportsComponent,
     EtudiantsComponent,
+    EntreprisesComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -67,8 +74,13 @@ import * as XLSX from 'xlsx'
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule,
     MatCardModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    HttpClientModule,
+    MatCheckboxModule,
+    MatSnackBarModule,
     MatTableModule,
     MatPaginatorModule,
     NgxEchartsModule.forRoot({

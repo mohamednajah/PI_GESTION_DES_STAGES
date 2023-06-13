@@ -1,4 +1,5 @@
 <mat-toolbar>
+
     <div class="left-section" *ngIf="searchFormGroup">
       <form class="search-form" [formGroup]="searchFormGroup" #searchForm="ngForm"(ngSubmit)="onChercherClick($event)">
         <mat-form-field *ngIf="showAnneeUniv" appearance="fill" class="form-field" fxFlex>
@@ -23,6 +24,7 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field *ngIf="showFormField" appearance="fill" class="form-field" fxFlex>
+
           <input matInput placeholder="Rechercher..." type="text" formControlName="keyword">
         </mat-form-field>
         <button class="wid" mat-raised-button type="submit"	 color="primary" (click)="onChercherClick($event)">{{buttonName}}</button>
