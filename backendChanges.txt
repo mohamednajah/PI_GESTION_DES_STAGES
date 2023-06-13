@@ -1,0 +1,11 @@
+Backend changes:
+
+in EtudiantRestController:
+  @GetMapping("/Etudiants/search")
+    public List<Etudiant> searchCustomers(@RequestParam(name = "keyword",defaultValue = "") String keyword){
+        return EtudiantRepository.searchEtudiants("%"+keyword+"%");
+    }
+
+in EtudiantRepository:
+ @Query("select c from Etudiant c where c.nom like :kw or c.prenom like :kw or c.codeApogee like :kw or c.ville like :kw" )
+    List<Etudiant> searchEtudiants(@Param("kw") String keyword);

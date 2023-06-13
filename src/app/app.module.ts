@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+// @ts-ignore
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
@@ -60,6 +64,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MatProgressBarModule,
     BrowserAnimationsModule,
     MatGridListModule,
     MatSidenavModule,
@@ -74,10 +79,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ReactiveFormsModule,
     MatDatepickerModule,
     HttpClientModule,
-    MatTableModule,
     MatCheckboxModule,
     MatSnackBarModule,
-        NgxEchartsModule.forRoot({
+    MatTableModule,
+    MatPaginatorModule,
+    NgxEchartsModule.forRoot({
       /**
        * This will import all modules from echarts.
        * If you only need custom modules,

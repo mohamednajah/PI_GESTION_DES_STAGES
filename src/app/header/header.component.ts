@@ -1,27 +1,23 @@
-import { Component,Input, OnInit } from '@angular/core';
-import {  EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import {FormBuilder} from "@angular/forms";
+
+import {Component, EventEmitter, Input, OnInit,Output} from '@angular/core';
+import {ActivatedRoute } from "@angular/router";
+import {FormBuilder, FormGroup} from "@angular/forms"
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
-  @Output() searchFormSubmitted = new EventEmitter<FormGroup>();
-  searchForm!: FormGroup;
- 
-  constructor(private fb:FormBuilder){
-   
-  }
-  ngOnInit(): void {
-    
-  }
+
 
 
 
   
+export class HeaderComponent implements OnInit{
+  @Output() searchClicked: EventEmitter<any> = new EventEmitter<any>();
+  public searchFormGroup : FormGroup | undefined;
+
+  constructor(private route: ActivatedRoute,private fb: FormBuilder) {}
   // @ts-ignore
   @Input() buttonName: string;
   // @ts-ignore
@@ -29,5 +25,31 @@ export class HeaderComponent implements OnInit {
   @Input() showAnneeUniv:boolean=true;
   @Input() showtypestage:boolean=true;
   @Input() showfiliere:boolean=true;
+  // @ts-ignore
+  currentRoute: string
+  ngOnInit() {
+    this.route.url.subscribe(urlSegments => {
+      this.currentRoute = urlSegments[0].path;
+      console.log("currentRoute: "+this.currentRoute);
+    });
+    if(this.currentRoute==='etudiants'){
+      this.searchFormGroup=this.fb.group({
+        keyword : this.fb.control("")
+      });
+      // @ts-ignore
+      this.onChercherClick(event);
+    }
+  }
 
+  onChercherClick(event: Event){
+    event.preventDefault();
+    if (this.currentRoute === 'etudiants') {
+      this.searchClicked.emit();
+      //todo for others
+    } else if (this.currentRoute === 'route2') {
+    } else if (this.currentRoute === 'route3') {
+    } else {
+      // handling for other routes
+    }
+  }
 }

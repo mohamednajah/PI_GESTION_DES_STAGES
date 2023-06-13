@@ -1,29 +1,98 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+
 import {EtudiantsService} from "../services/etudiants.service";
 import * as XLSX from 'xlsx'
-
+import {etudiants} from "../models/etudiant";
+import {Router} from "@angular/router";
+import {HeaderComponent} from "../header/header.component";
+import {catchError, throwError} from "rxjs";
 @Component({
   selector: 'app-etudiants',
   templateUrl: './etudiants.component.html',
-  styleUrls: ['./etudiants.component.css']
+  styleUrls: ['./etudiants.component.css'],
 })
 export class EtudiantsComponent implements OnInit {
 
-  ExcelData:any;
-  constructor(private http: HttpClient,private etudiantsSerive:EtudiantsService
-  ) {}
+  @ViewChild(HeaderComponent) headerComponent: HeaderComponent | undefined;
+
+  displayedColumns: string[] = [
+    'codeApogee',
+    'cne',
+    'cni',
+    'nom',
+    'prenom',
+    'dateNaissance',
+    'ville',
+    'adresse',
+    'telephone',
+    'email'
+  ];
+  isCardVisible = false;
+
+
+  newEtudiantFormGroup!: FormGroup;
+  showSuccessMessage: boolean = false;
+  successMessage: string = '';
+  showProgressBar: boolean = false;
+  progressValue: number = 0;
+  ExcelData: any;
+  etudiantList: etudiants[] = [];
+  allStudents: any;
+
+  constructor(private http: HttpClient, private etudiantsService: EtudiantsService, private fb: FormBuilder, private router: Router
+  ) {
+  }
 
   showForm = false;
+
   importUsers() {
-    // Logic for importing users
+    this.ExcelData.forEach((row: any) => {
+      const etudiant: etudiants = {
+        codeApogee: row.codeApogee,
+        cne: row.cne,
+        cni: row.cni,
+        nom: row.nom,
+        prenom: row.prenom,
+        dateNaissance: row.dateNaissance,
+        ville: row.ville,
+        adresse: row.adresse,
+        telephone: row.telephone,
+        email: row.email
+
+      };
+      this.etudiantList.push(etudiant);
+    });
+
+    this.etudiantList.forEach((etudiant: etudiants, index: number) => {
+      console.log(etudiant)
+      this.etudiantsService.addEtudiant(etudiant).subscribe(
+        () => {
+          console.log('Import successful!');
+          this.progressValue = Math.round(((index + 1) / this.etudiantList.length) * 100);
+          if (index === this.etudiantList.length - 1) {
+            this.showProgressBar = false;
+            this.showSuccessMessage = true;
+            this.successMessage = 'Importation avec succée!';
+            setTimeout(() => {
+              this.showSuccessMessage = false;
+            }, 3000);
+          }
+        },
+        (error: any) => {
+          // Error handling
+          console.error('Error occurred while importing:', error);
+        }
+      );
+    });
   }
 
   exportToCSV() {
-    this.etudiantsSerive.getEtudiants().subscribe((etudiants: any[]) => {
+    this.etudiantsService.getEtudiants().subscribe((etudiants: any[]) => {
       console.log(etudiants);
       const csvData = this.convertToCSV(etudiants);
-      const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+      const blob = new Blob([csvData], {type: 'text/csv;charset=utf-8;'});
       const downloadLink = document.createElement('a');
       const url = URL.createObjectURL(blob);
       downloadLink.href = url;
@@ -40,25 +109,76 @@ export class EtudiantsComponent implements OnInit {
   }
 
 
+  readexcel(event: any) {
 
-
-
-readexcel(event:any){
-   let file=event.target.files[0];
-   let fileReader=new FileReader();
-   fileReader.readAsBinaryString(file);
-  fileReader.onload=(e)=>{
-    var workBook = XLSX.read(fileReader.result, {type: "binary"});
-      var sheetNames= workBook.SheetNames;
-      this.ExcelData= XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]])
+    let file = event.target.files[0];
+    let fileReader = new FileReader();
+    fileReader.readAsBinaryString(file);
+    fileReader.onload = (e) => {
+      var workBook = XLSX.read(fileReader.result, {type: "binary"});
+      var sheetNames = workBook.SheetNames;
+      this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]])
+      this.showProgressBar = true;
+      this.progressValue = 0;
       console.log(this.ExcelData);
+
+    }
 
   }
 
 
-
-}
-
   ngOnInit(): void {
+    this.newEtudiantFormGroup = this.fb.group({
+      codeApogee: this.fb.control(null, [Validators.required]),
+      cne: this.fb.control(null, [Validators.required]),
+      cni: this.fb.control(null, [Validators.required]),
+      nom: this.fb.control(null, [Validators.required]),
+      prenom: this.fb.control(null, [Validators.required]),
+      dateNaissance: this.fb.control(null, [Validators.required]),
+      ville: this.fb.control(null, [Validators.required]),
+      adresse: this.fb.control(null, [Validators.required]),
+      telephone: this.fb.control(null, [Validators.required]),
+      email: this.fb.control(null, [Validators.required, Validators.email])
+    });
+  }
+
+  handleSaveStudent() {
+    this.showProgressBar = true;
+    this.progressValue = 0;
+    let student: etudiants = this.newEtudiantFormGroup.value;
+    this.etudiantsService.addEtudiant(student).subscribe({
+      next: data => {
+        this.progressValue = Math.round(100);
+        this.showSuccessMessage = true;
+        this.successMessage = 'Etudiant enregistré avec succée!';
+        setTimeout(() => {
+          this.showSuccessMessage = false;
+          this.showProgressBar = false;
+        }, 3000);
+        this.newEtudiantFormGroup.reset();
+        this.newEtudiantFormGroup.clearValidators();
+        this.router.navigateByUrl("/etudiants");
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+  }
+
+  closeCard() {
+    this.isCardVisible = false;
+  }
+
+  handleSearchEtudiants() {
+    this.isCardVisible = true;
+
+    // @ts-ignore
+    let kw = this.headerComponent.searchFormGroup?.value.keyword;
+    this.allStudents=this.etudiantsService.searchEtudiant(kw).pipe(
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+    console.log(this.allStudents);
   }
 }
