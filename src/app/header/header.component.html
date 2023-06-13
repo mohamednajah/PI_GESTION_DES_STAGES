@@ -1,6 +1,6 @@
 <mat-toolbar>
     <div class="left-section">
-      <form class="search-form">
+      <form class="search-form" [formGroup]="searchForm" >
         <mat-form-field *ngIf="showAnneeUniv" appearance="fill" class="form-field" fxFlex>
           <mat-select placeholder="Annee universitaire">
             <mat-option value="option1">Option 1</mat-option>
@@ -23,7 +23,7 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field *ngIf="showFormField" appearance="fill" class="form-field" fxFlex>
-          <input matInput placeholder="Rechercher..." type="text">
+          <input formControlName="keyword" matInput placeholder="Rechercher..." type="text">
         </mat-form-field>
         <button class="wid" mat-raised-button type="submit"	 color="primary">{{buttonName}}</button>
 
