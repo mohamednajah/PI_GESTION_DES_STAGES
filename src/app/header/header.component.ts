@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit,Output} from '@angular/core';
 import {ActivatedRoute } from "@angular/router";
+import {FormBuilder, FormGroup} from "@angular/forms"
 
 @Component({
   selector: 'app-header',
@@ -8,8 +9,9 @@ import {ActivatedRoute } from "@angular/router";
 })
 export class HeaderComponent implements OnInit{
   @Output() searchClicked: EventEmitter<any> = new EventEmitter<any>();
+  public searchFormGroup : FormGroup | undefined;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute,private fb: FormBuilder) {}
   // @ts-ignore
   @Input() buttonName: string;
   // @ts-ignore
@@ -24,6 +26,13 @@ export class HeaderComponent implements OnInit{
       this.currentRoute = urlSegments[0].path;
       console.log("currentRoute: "+this.currentRoute);
     });
+    if(this.currentRoute==='etudiants'){
+      this.searchFormGroup=this.fb.group({
+        keyword : this.fb.control("")
+      });
+      // @ts-ignore
+      this.onChercherClick(event);
+    }
   }
 
   onChercherClick(event: Event){

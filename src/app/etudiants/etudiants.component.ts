@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
@@ -6,12 +6,16 @@ import {EtudiantsService} from "../services/etudiants.service";
 import * as XLSX from 'xlsx'
 import {etudiants} from "../models/etudiant";
 import {Router} from "@angular/router";
+import {HeaderComponent} from "../header/header.component";
+import {catchError, throwError} from "rxjs";
 @Component({
   selector: 'app-etudiants',
   templateUrl: './etudiants.component.html',
   styleUrls: ['./etudiants.component.css'],
 })
 export class EtudiantsComponent implements OnInit {
+
+  @ViewChild(HeaderComponent) headerComponent: HeaderComponent | undefined;
 
   displayedColumns: string[] = [
     'codeApogee',
@@ -35,7 +39,7 @@ export class EtudiantsComponent implements OnInit {
   progressValue: number = 0;
   ExcelData: any;
   etudiantList: etudiants[] = [];
-  allStudents: etudiants[] = [];
+  allStudents: any;
 
   constructor(private http: HttpClient, private etudiantsService: EtudiantsService, private fb: FormBuilder, private router: Router
   ) {
@@ -161,17 +165,20 @@ export class EtudiantsComponent implements OnInit {
     });
   }
 
-  fetchStudents() {
-    this.isCardVisible = true;
-    console.log("fetchStudents called")
-    this.etudiantsService.getEtudiants().subscribe((students) => {
-      console.log(students)
-      this.allStudents = students;
-    });
-    console.log(this.allStudents);
-
-  }
   closeCard() {
     this.isCardVisible = false;
+  }
+
+  handleSearchEtudiants() {
+    this.isCardVisible = true;
+
+    // @ts-ignore
+    let kw = this.headerComponent.searchFormGroup?.value.keyword;
+    this.allStudents=this.etudiantsService.searchEtudiant(kw).pipe(
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+    console.log(this.allStudents);
   }
 }

@@ -19,4 +19,7 @@ public addEtudiant(etudiant:etudiants):Observable<etudiants>{
   return this.http.post<etudiants>(this.apiUrl+"/Etudiants",etudiant);
 
   }
+  public searchEtudiant(keyword : string):Observable<Array<etudiants>>{
+    return this.http.get<Array<etudiants>>(this.apiUrl+"/Etudiants/search?keyword="+keyword)
+  }
 }
