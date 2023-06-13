@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EntreprisesService } from '../services/entreprises.service';
 import {NgFor} from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
+import { HeaderComponent } from '../header/header.component';
 
 
 export interface PeriodicElement {
@@ -22,6 +23,8 @@ export interface PeriodicElement {
 })
 
 export class EntreprisesComponent implements OnInit {
+  @ViewChild(HeaderComponent) headerComponent: HeaderComponent | undefined;
+
   nbrEntreprises!:number;
   nbrPartenaires!:number;
   displayedColumns: string[] = ['nomEntreprise', 'type', 'activite', 'partenaire'];
@@ -108,13 +111,16 @@ export class EntreprisesComponent implements OnInit {
       }
     );
   }
-  onSearchFormSubmitted(searchForm: FormGroup) {
-    // Obtenez les valeurs du formulaire ici
-    // par exemple:
-    const query = searchForm.get('keyword')?.value;
-    // Effectuez les opérations de recherche ou les actions appropriées avec les valeurs du formulaire
-    this.data=this.entrepriseService.SearchEntreprise(query)
-    this.getentreprises();
+  
+  handleSearchEtudiants(){
+    // @ts-ignore
+    let kw = this.headerComponent.searchFormGroup?.value.keyword;
+    this.data=this.entrepriseService.searchentreprise(kw).pipe(
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+    console.log(this.data);
   }
 
 }

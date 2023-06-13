@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit{
       this.currentRoute = urlSegments[0].path;
       console.log("currentRoute: "+this.currentRoute);
     });
-    if(this.currentRoute==='etudiants'){
+    if((this.currentRoute==='etudiants')|| (this.currentRoute==='entreprises')){
       this.searchFormGroup=this.fb.group({
         keyword : this.fb.control("")
       });
@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit{
 
   onChercherClick(event: Event){
     event.preventDefault();
-    if (this.currentRoute === 'etudiants') {
+    if ((this.currentRoute === 'etudiants')||(this.currentRoute==='entreprises')) {
       this.searchClicked.emit();
       //todo for others
     } else if (this.currentRoute === 'route2') {

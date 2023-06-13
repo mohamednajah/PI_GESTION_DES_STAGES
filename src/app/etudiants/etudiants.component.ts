@@ -140,6 +140,10 @@ export class EtudiantsComponent implements OnInit {
       telephone: this.fb.control(null, [Validators.required]),
       email: this.fb.control(null, [Validators.required, Validators.email])
     });
+    this.etudiantsService.getEtudiants().subscribe((etudiants: any[]) => {
+      this.allStudents = etudiants;
+      this.handleSearchEtudiants(); // Alimenter la carte après avoir récupéré les données
+    });
   }
 
   handleSaveStudent() {

@@ -1,12 +1,12 @@
 <app-header  [showfiliere]="false" [showtypestage]="false" [showAnneeUniv]="false"  [buttonName]="'Chercher'" (searchClicked)="handleSearchEtudiants()" ></app-header>
-<div class="container mt-2" *ngIf="isCardVisible" >
+<div class="container mt-2"  >
 <div class="card">
   <div class="card-header">
     <p >Etudiants trouvés</p>
     <button class="close-button" (click)="closeCard()" >X</button>
   </div>
   <div class="card-body">
-    <table mat-table [dataSource]="allStudents" class="mat-elevation-z8">
+    <table mat-table [dataSource]="allStudents" class="mat-elevation-z8  ">
       <!-- Table columns -->
       <ng-container matColumnDef="{{ column }}" *ngFor="let column of displayedColumns">
         <th mat-header-cell *matHeaderCellDef>{{ column }}</th>

@@ -19,8 +19,8 @@ export class EntreprisesService {
   Addentreprise(entreprise:entreprise):Observable<entreprise>{
     return this.http.post<entreprise>(this.backend+"/entreprise",entreprise);
   }
-  SearchEntreprise(kw:String):Observable<any>{
-    return this.http.get(this.backend+"/entreprises/search")
+  public searchentreprise(keyword : string):Observable<Array<entreprise>>{
+    return this.http.get<Array<entreprise>>(this.backend+"/entreprises/search?keyword="+keyword)
   }
   
 }
