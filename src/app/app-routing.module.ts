@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {DashbordComponent} from "./espaceetudiant/dashbord/dashbord.component";
-import {RapportsComponent} from "./espaceetudiant/rapports/rapports.component";
-import {EtudiantsComponent} from "./espaceetudiant/etudiants/etudiants.component";
-import { EntreprisesComponent } from './espaceetudiant/entreprises/entreprises.component';
+import {DashbordComponent} from "./dashbord/dashbord.component";
+import {RapportsComponent} from "./rapports/rapports.component";
+import {EtudiantsComponent} from "./etudiants/etudiants.component";
+import { EntreprisesComponent } from './entreprises/entreprises.component';
 const routes: Routes = [
   {path:"",redirectTo:"dashbord",pathMatch:"full"},
   {path:"dashbord",component:DashbordComponent},

@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+// @ts-ignore
+import * as pdfjsLib from 'pdfjs-dist/webpack';
 
+// @ts-ignore
+import { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist/types/display/api';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 // @ts-ignore
