@@ -1,0 +1,52 @@
+@GetMapping("/suivi")
+    public Map<String, Object> getSuiviStages() {
+        Map<String, Object> output = new HashMap<>();
+        String query1 = "SELECT E.code_apogee, E.nom, E.prenom, S.date_debut, S.date_fin, S.ville , S.type_stage, S.intitule_stage, S.embauche , F.intitule_filiere as filiere, D.intitule as departement\n" +
+                "FROM etudiant E , stage S, filiere_etudiants FE, filiere F, departement D\n" +
+                "WHERE E.code_apogee=FE.etudiants_code_apogee AND\n" +
+                "S.etudiant_code_apogee=E.code_apogee AND\n" +
+                "F.code_filiere=FE.filiere_code_filiere AND\n" +
+                "F.departement_code_departement=D.code_departement";
+        List<Map<String, Object>> result1 = jdbcTemplate.queryForList(query1);
+
+        String query2 = "SELECT COUNT(*) / (SELECT COUNT(*) AS embauches FROM stage WHERE etudiant_code_apogee IS NOT NULL) * 100 AS embauches FROM stage WHERE embauche = 1";
+        List<Map<String, Object>> result2 = jdbcTemplate.queryForList(query2);
+
+        String query3 = "SELECT (COUNT(DISTINCT stage.etudiant_code_apogee) / COUNT(DISTINCT etudiant.code_apogee)) * 100 AS percentage_done_stage\n" +
+                "FROM stage\n" +
+                "CROSS JOIN etudiant\n" +
+                "WHERE YEAR(stage.date_debut) = YEAR(CURRENT_DATE());\n";
+        List<Map<String, Object>> result3 = jdbcTemplate.queryForList(query3);
+
+        output.put("embauches", result2.get(0).get("embauches"));
+        output.put("obtenusStage", result3.get(0).get("percentage_done_stage"));
+        output.put("getAll",result1);
+        return output;
+
+    }
+
+
+
+    @GetMapping("/suiviSearch")
+    public Map<String, Object> search(@RequestParam(name = "keyword",defaultValue = "") String keyword) {
+        Map<String, Object> output = new HashMap<>();String query1;
+        if(keyword.equals("")){
+             query1 = "SELECT E.code_apogee, E.nom, E.prenom, S.date_debut, S.date_fin, S.ville , S.type_stage, S.intitule_stage, S.embauche , F.intitule_filiere as filiere, D.intitule as departement\n" +
+                    "FROM etudiant E , stage S, filiere_etudiants FE, filiere F, departement D\n" +
+                    "WHERE E.code_apogee=FE.etudiants_code_apogee AND\n" +
+                    "S.etudiant_code_apogee=E.code_apogee AND\n" +
+                    "F.code_filiere=FE.filiere_code_filiere AND\n" +
+                    "F.departement_code_departement=D.code_departement";
+        }else{
+             query1 = "SELECT * FROM (SELECT E.code_apogee, E.nom, E.prenom, S.date_debut, S.date_fin, S.ville, S.type_stage, S.intitule_stage, S.embauche , F.intitule_filiere , D.intitule \n" +
+                    "FROM etudiant E , stage S, filiere_etudiants FE, filiere F, departement D\n" +
+                    "WHERE E.code_apogee=FE.etudiants_code_apogee AND\n" +
+                    "S.etudiant_code_apogee=E.code_apogee AND\n" +
+                    "F.code_filiere=FE.filiere_code_filiere AND\n" +
+                    "F.departement_code_departement=D.code_departement ) AS subquery where (type_stage like %:keyword% OR code_apogee like %:keyword% OR nom like %:keyword% OR prenom like %:keyword% OR date_debut like %:keyword% OR date_fin like %:keyword% OR ville like %:keyword% OR intitule_stage like %:keyword%)";
+
+        }
+          List<Map<String, Object>> result1 = jdbcTemplate.queryForList(query1);
+        output.put("result",result1);
+        return output;
+    }

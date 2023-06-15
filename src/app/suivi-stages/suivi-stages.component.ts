@@ -31,7 +31,10 @@ export class SuiviStagesComponent implements OnInit {
 
     })
 
+    this.suiviStagesService.getSuiviStages().subscribe(data=>{
+      this.data_=data["getAll"];
 
+    })
 
   }
 
@@ -72,11 +75,7 @@ export class SuiviStagesComponent implements OnInit {
   handleSearchStages(){
     // @ts-ignore
     let kw = this.headerComponent.searchFormGroup?.value.keyword;
-    let data = this.suiviStagesService.getSuiviSearch(kw).pipe(
-      catchError(err => {
-        return throwError(err);
-      })
-    );
+    let data = this.suiviStagesService.getSuiviSearch(kw);
     // @ts-ignore
     this.data_= data["result"];
     // @ts-ignore
