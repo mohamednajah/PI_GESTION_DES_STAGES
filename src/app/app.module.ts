@@ -39,6 +39,10 @@ import {MatTableModule} from '@angular/material/table';
 import { EntreprisesComponent } from './entreprises/entreprises.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { AuthComponent } from './auth/auth.component';
+import { FormsModule } from '@angular/forms';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 
 
@@ -60,9 +64,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     RapportsComponent,
     EtudiantsComponent,
     EntreprisesComponent,
+    AuthComponent,
 
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -86,6 +92,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatSnackBarModule,
     MatTableModule,
     MatPaginatorModule,
+    MatMenuModule,
     NgxEchartsModule.forRoot({
       /**
        * This will import all modules from echarts.

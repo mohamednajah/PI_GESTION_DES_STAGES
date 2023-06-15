@@ -1,0 +1,30 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="col-6">
+    <div class="card mx-auto">
+      <div class="card-body">
+        <h2 class="card-title text-center">ENSET ESPACE ADMIN </h2>
+        <form (ngSubmit)="login()" #authForm="ngForm">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" [(ngModel)]="username" required class="form-control" #usernameField="ngModel">
+            <div *ngIf="usernameField.invalid && (usernameField.dirty || usernameField.touched)" class="text-danger">
+              <div *ngIf="usernameField.errors?.['required']">Username is required.</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" [(ngModel)]="password" required class="form-control" #passwordField="ngModel">
+            <div *ngIf="passwordField.invalid && (passwordField.dirty || passwordField.touched)" class="text-danger">
+              <div *ngIf="passwordField.errors?.['required']">Password is required.</div>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary rounded-pill winter-button mt-3" routerLink="/dashbord">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
