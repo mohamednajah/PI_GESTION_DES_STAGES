@@ -72,14 +72,19 @@ export class SuiviStagesComponent implements OnInit {
 
 
 
-  handleSearchStages(){
+  handleSearchStages() {
     // @ts-ignore
     let kw = this.headerComponent.searchFormGroup?.value.keyword;
-    let data = this.suiviStagesService.getSuiviSearch(kw);
-    // @ts-ignore
-    this.data_= data["result"];
-    // @ts-ignore
-    console.log(data["result"]);
+    console.log(kw);
+    this.suiviStagesService.getSuiviSearch(kw).subscribe(
+      (data: any) => {
+        console.log(data.result);
+        this.data_ = data.result;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
 }

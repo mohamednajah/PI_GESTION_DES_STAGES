@@ -27,26 +27,38 @@
 
 
 
-    @GetMapping("/suiviSearch")
-    public Map<String, Object> search(@RequestParam(name = "keyword",defaultValue = "") String keyword) {
-        Map<String, Object> output = new HashMap<>();String query1;
-        if(keyword.equals("")){
-             query1 = "SELECT E.code_apogee, E.nom, E.prenom, S.date_debut, S.date_fin, S.ville , S.type_stage, S.intitule_stage, S.embauche , F.intitule_filiere as filiere, D.intitule as departement\n" +
-                    "FROM etudiant E , stage S, filiere_etudiants FE, filiere F, departement D\n" +
-                    "WHERE E.code_apogee=FE.etudiants_code_apogee AND\n" +
-                    "S.etudiant_code_apogee=E.code_apogee AND\n" +
-                    "F.code_filiere=FE.filiere_code_filiere AND\n" +
-                    "F.departement_code_departement=D.code_departement";
-        }else{
-             query1 = "SELECT * FROM (SELECT E.code_apogee, E.nom, E.prenom, S.date_debut, S.date_fin, S.ville, S.type_stage, S.intitule_stage, S.embauche , F.intitule_filiere , D.intitule \n" +
-                    "FROM etudiant E , stage S, filiere_etudiants FE, filiere F, departement D\n" +
-                    "WHERE E.code_apogee=FE.etudiants_code_apogee AND\n" +
-                    "S.etudiant_code_apogee=E.code_apogee AND\n" +
-                    "F.code_filiere=FE.filiere_code_filiere AND\n" +
-                    "F.departement_code_departement=D.code_departement ) AS subquery where (type_stage like %:keyword% OR code_apogee like %:keyword% OR nom like %:keyword% OR prenom like %:keyword% OR date_debut like %:keyword% OR date_fin like %:keyword% OR ville like %:keyword% OR intitule_stage like %:keyword%)";
+      @GetMapping("/suiviSearch")
+      public Map<String, Object> search(@RequestParam(name = "keyword",defaultValue = "") String keyword) {
+          Map<String, Object> output = new HashMap<>();String query1; List<Map<String, Object>> result1;
+          if(keyword.equals("")){
+               query1 = "SELECT E.code_apogee, E.nom, E.prenom, S.date_debut, S.date_fin, S.ville , S.type_stage, S.intitule_stage, S.embauche , F.intitule_filiere as filiere, D.intitule as departement\n" +
+                      "FROM etudiant E , stage S, filiere_etudiants FE, filiere F, departement D\n" +
+                      "WHERE E.code_apogee=FE.etudiants_code_apogee AND\n" +
+                      "S.etudiant_code_apogee=E.code_apogee AND\n" +
+                      "F.code_filiere=FE.filiere_code_filiere AND\n" +
+                      "F.departement_code_departement=D.code_departement";
+              result1 = jdbcTemplate.queryForList(query1);
+          }else{
+               query1 = "SELECT * FROM (SELECT E.code_apogee, E.nom, E.prenom, S.date_debut, S.date_fin, S.ville, S.type_stage, S.intitule_stage, S.embauche, F.intitule_filiere, D.intitule " +
+                       "FROM etudiant E, stage S, filiere_etudiants FE, filiere F, departement D " +
+                       "WHERE E.code_apogee = FE.etudiants_code_apogee " +
+                       "AND S.etudiant_code_apogee = E.code_apogee " +
+                       "AND F.code_filiere = FE.filiere_code_filiere " +
+                       "AND F.departement_code_departement = D.code_departement) AS subquery " +
+                       "WHERE (type_stage LIKE CONCAT('%', ?, '%') " +
+                       "OR code_apogee LIKE CONCAT('%', ?, '%') " +
+                       "OR nom LIKE CONCAT('%', ?, '%') " +
+                       "OR prenom LIKE CONCAT('%', ?, '%') " +
+                       "OR date_debut LIKE CONCAT('%', ?, '%') " +
+                       "OR date_fin LIKE CONCAT('%', ?, '%') " +
+                       "OR ville LIKE CONCAT('%', ?, '%') " +
+                       "OR intitule_stage LIKE CONCAT('%', ?, '%'))";
+              List<Object> params = Arrays.asList(keyword, keyword, keyword, keyword, keyword, keyword, keyword, keyword);
 
-        }
-          List<Map<String, Object>> result1 = jdbcTemplate.queryForList(query1);
-        output.put("result",result1);
-        return output;
-    }
+              result1= jdbcTemplate.queryForList(query1, params.toArray());
+
+          }
+
+          output.put("result",result1);
+          return output;
+      }
