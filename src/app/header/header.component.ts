@@ -12,7 +12,7 @@ import {FormBuilder, FormGroup} from "@angular/forms"
 
 
 
-  
+
 export class HeaderComponent implements OnInit{
   @Output() searchClicked: EventEmitter<any> = new EventEmitter<any>();
   public searchFormGroup : FormGroup | undefined;
@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit{
       this.currentRoute = urlSegments[0].path;
       console.log("currentRoute: "+this.currentRoute);
     });
-    if((this.currentRoute==='etudiants')|| (this.currentRoute==='entreprises')){
+    if((this.currentRoute==='etudiants')|| (this.currentRoute==='entreprises')||(this.currentRoute==='suivi')){
       this.searchFormGroup=this.fb.group({
         keyword : this.fb.control("")
       });
@@ -42,14 +42,9 @@ export class HeaderComponent implements OnInit{
   }
 
   onChercherClick(event: Event){
+    console.log("button clicked")
     event.preventDefault();
-    if ((this.currentRoute === 'etudiants')||(this.currentRoute==='entreprises')) {
+    if((this.currentRoute==='etudiants')|| (this.currentRoute==='entreprises')||(this.currentRoute==='suivi')){
       this.searchClicked.emit();
-      //todo for others
-    } else if (this.currentRoute === 'route2') {
-    } else if (this.currentRoute === 'route3') {
-    } else {
-      // handling for other routes
-    }
-  }
+  }}
 }

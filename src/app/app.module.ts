@@ -35,15 +35,7 @@ import {MatTableModule} from '@angular/material/table';
 import { EntreprisesComponent } from './entreprises/entreprises.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
-
-
-
-
-
-
-
-
+import { SuiviStagesComponent } from './suivi-stages/suivi-stages.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +48,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     RapportsComponent,
     EtudiantsComponent,
     EntreprisesComponent,
+    SuiviStagesComponent,
 
   ],
   imports: [
