@@ -5,6 +5,8 @@ import {RapportsComponent} from "./rapports/rapports.component";
 import {EtudiantsComponent} from "./etudiants/etudiants.component";
 import { EntreprisesComponent } from './entreprises/entreprises.component';
 import {AuthComponent} from "./auth/auth.component";
+
+import {SuiviStagesComponent} from "./suivi-stages/suivi-stages.component";
 const routes: Routes = [
   {path:"",redirectTo:"dashbord",pathMatch:"full"},
   {path:"dashbord",component:DashbordComponent},
@@ -12,6 +14,8 @@ const routes: Routes = [
   {path:"etudiants",component:EtudiantsComponent},
   {path:"entreprises",component:EntreprisesComponent},
   {path:"auth",component:AuthComponent}
+  {path:"suivi",component:SuiviStagesComponent}
+
 
 
 ];

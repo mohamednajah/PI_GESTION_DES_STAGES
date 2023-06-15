@@ -52,6 +52,7 @@ import { MatMenuModule } from '@angular/material/menu';
 
 
 
+import { SuiviStagesComponent } from './suivi-stages/suivi-stages.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { MatMenuModule } from '@angular/material/menu';
     EtudiantsComponent,
     EntreprisesComponent,
     AuthComponent,
+    SuiviStagesComponent,
 
   ],
   imports: [
