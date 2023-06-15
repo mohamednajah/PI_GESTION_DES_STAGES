@@ -8,7 +8,7 @@ import {AuthComponent} from "./auth/auth.component";
 
 import {SuiviStagesComponent} from "./suivi-stages/suivi-stages.component";
 const routes: Routes = [
-  {path:"",redirectTo:"dashbord",pathMatch:"full"},
+  {path:"",redirectTo:"auth",pathMatch:"full"},
   {path:"dashbord",component:DashbordComponent},
   {path:"rapports",component:RapportsComponent},
   {path:"etudiants",component:EtudiantsComponent},
