@@ -1,7 +1,7 @@
 <mat-toolbar>
 
     <div class="left-section" *ngIf="searchFormGroup">
-      <form class="search-form" [formGroup]="searchFormGroup" #searchForm="ngForm"(ngSubmit)="onChercherClick($event)">
+      <form class="search-form" [formGroup]="searchFormGroup" (ngSubmit)="onChercherClick($event)">
         <mat-form-field *ngIf="showAnneeUniv" appearance="fill" class="form-field" fxFlex>
           <mat-select placeholder="Annee universitaire">
             <mat-option value="option1">Option 1</mat-option>

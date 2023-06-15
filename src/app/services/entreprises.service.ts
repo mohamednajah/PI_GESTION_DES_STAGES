@@ -22,6 +22,6 @@ export class EntreprisesService {
   public searchentreprise(keyword : string):Observable<Array<entreprise>>{
     return this.http.get<Array<entreprise>>(this.backend+"/entreprises/search?keyword="+keyword)
   }
-  
+
 }
 

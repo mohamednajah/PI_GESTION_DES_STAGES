@@ -1,0 +1,30 @@
+/* Styles pour les textes */
+div > div > span:nth-child(1) {
+  color: rgb(0, 0, 0);
+}
+
+/* Styles pour les valeurs */
+div > div > span:nth-child(2) {
+  font-weight: bold;
+  color: blue;
+
+}
+table {
+  width: 80%;
+  margin-right: 40px;
+
+}
+
+button {
+  margin: 16px 8px;
+}
+.column-header{
+  text-align: center;
+
+}
+.column-cell {
+  border-right: 1px solid #ccc;
+  padding-right: 10px;
+  text-align: center;
+}
+
