@@ -32,7 +32,8 @@ export class HeaderComponent implements OnInit{
       this.currentRoute = urlSegments[0].path;
       console.log("currentRoute: "+this.currentRoute);
     });
-    if((this.currentRoute==='etudiants')|| (this.currentRoute==='entreprises')||(this.currentRoute==='suivi')){
+    if((this.currentRoute==='etudiants')|| (this.currentRoute==='entreprises')||(this.currentRoute==='suivi')|| (this.currentRoute==='rapports')){
+
       this.searchFormGroup=this.fb.group({
         keyword : this.fb.control("")
       });
@@ -44,7 +45,7 @@ export class HeaderComponent implements OnInit{
   onChercherClick(event: Event){
     console.log("button clicked")
     event.preventDefault();
-    if((this.currentRoute==='etudiants')|| (this.currentRoute==='entreprises')||(this.currentRoute==='suivi')){
+    if((this.currentRoute==='etudiants')|| (this.currentRoute==='entreprises')||(this.currentRoute==='suivi') || (this.currentRoute==='rapports')){
       this.searchClicked.emit();
   }}
 }

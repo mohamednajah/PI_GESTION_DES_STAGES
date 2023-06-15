@@ -183,6 +183,7 @@ export class EtudiantsComponent implements OnInit {
         return throwError(err);
       })
     );
+    
     console.log(this.allStudents);
   }
 }

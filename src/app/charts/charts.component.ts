@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EChartsOption } from 'echarts';
+import { DashbordService } from '../services/dashbord.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-charts',
@@ -7,6 +9,13 @@ import { EChartsOption } from 'echarts';
   styleUrls: ['./charts.component.css']
 })
 export class ChartsComponent implements OnInit {
+  entrepriseNames: string[] = [];
+  technologies: string[] = [];
+  entrepriseData: { value: number, name: string }[] = [];
+
+  constructor(private dashbordService: DashbordService) {
+  }
+
   option:EChartsOption = {
     title: {
       text: 'TAUX D\'ADMISSIBILITE',
@@ -91,10 +100,11 @@ export class ChartsComponent implements OnInit {
       }
     ]
   };
+
   option1:EChartsOption = {
     xAxis: {
       type: 'category',
-      data: ['React', 'Angular', 'View', 'PHP', 'NET', 'PYTHON', 'JAVA']
+      data: ['React', 'Angular', 'Vue', 'PHP', 'NET', 'PYTHON', 'JAVA']
     },
     yAxis: {
       type: 'value'
@@ -112,10 +122,32 @@ export class ChartsComponent implements OnInit {
   };
 
 
-
   ngOnInit(): void {
+    this.getEntrepriseNames();
+    this.getEntrepriseData();
+    this.gettechnologies();
 
   }
+  getEntrepriseNames() {
+    this.dashbordService.getIndicators().subscribe(data => {
+      const entreprises = data['Entreprises'];
+      this.entrepriseNames = entreprises.map((entreprise:any) => entreprise.ent);
+    });
+  }
+    gettechnologies() {
+      this.dashbordService.getIndicators().subscribe(data => {
+        const technologies = data['most_used_technologies'];
+        this.entrepriseNames = technologies.map((technologie:any) => technologie.Sujets);
+      });
 
-
+  }
+  getEntrepriseData() {
+    this.dashbordService.getIndicators().subscribe(data => {
+      const entreprises = data['Entreprises'];
+      this.entrepriseData = entreprises.map((entreprise:any) => ({
+        value: entreprise.nombre_stages,
+        name: entreprise.ent
+      }));
+    });
+  }
 }
