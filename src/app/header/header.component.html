@@ -33,13 +33,17 @@
       </form>
     </div>
 
-    <div class="right-section">
-      <div class="user-info" fxLayout="row" fxLayoutAlign="end center">
-        <img src="https://i.ibb.co/VNjn9XK/d73313b8-f0e1-47bc-99c0-be3d77ab8b09.jpg" alt="User Picture" class="user-picture">
-        <div class="username ms-2">
-          <span class="mt-1">username</span>
-          <span class="mb-1">Admin</span>
-        </div>
+  <div class="right-section">
+    <div class="user-info" fxLayout="row" fxLayoutAlign="end center">
+      <img src="https://i.ibb.co/VNjn9XK/d73313b8-f0e1-47bc-99c0-be3d77ab8b09.jpg" alt="User Picture" class="user-picture" [matMenuTriggerFor]="menu">
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/auth">Logout</button>
+      </mat-menu>
+      <div class="username ms-2">
+        <span class="mt-1">Mohamed</span>
+        <span class="mb-1">Admin</span>
       </div>
     </div>
-  </mat-toolbar>
+  </div>
+
+</mat-toolbar>

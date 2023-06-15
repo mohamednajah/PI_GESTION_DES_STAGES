@@ -1,0 +1,41 @@
+.container {
+  height: 100%;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+}
+
+.btn {
+  font-size: 18px;
+  padding: 12px 24px;
+  border-radius: 30px;
+}
+.winter-but.container {
+  height: 100%;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+}
+
+.winter-button {
+  background-color: #005f7f;
+  border-color: #005f7f;
+  color: #fff;
+  padding: 8px 24px;
+  font-size: 14px;
+  height: 36px;
+  line-height: 20px;
+}
+ton {
+  background-color: #005f7f; /* Remplacez cette valeur par la couleur d'hiver souhaitée */
+  border-color: #005f7f; /* Couleur de la bordure */
+  color: #fff; /* Couleur du texte */
+}
+.hide-navbar {
+  display: none;
+}
+

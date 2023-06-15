@@ -39,6 +39,19 @@ import {MatTableModule} from '@angular/material/table';
 import { EntreprisesComponent } from './entreprises/entreprises.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { AuthComponent } from './auth/auth.component';
+import { FormsModule } from '@angular/forms';
+import { MatMenuModule } from '@angular/material/menu';
+
+
+
+
+
+
+
+
+
+
 import { SuiviStagesComponent } from './suivi-stages/suivi-stages.component';
 
 @NgModule({
@@ -52,10 +65,12 @@ import { SuiviStagesComponent } from './suivi-stages/suivi-stages.component';
     RapportsComponent,
     EtudiantsComponent,
     EntreprisesComponent,
+    AuthComponent,
     SuiviStagesComponent,
 
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -79,6 +94,7 @@ import { SuiviStagesComponent } from './suivi-stages/suivi-stages.component';
     MatSnackBarModule,
     MatTableModule,
     MatPaginatorModule,
+    MatMenuModule,
     NgxEchartsModule.forRoot({
       /**
        * This will import all modules from echarts.
